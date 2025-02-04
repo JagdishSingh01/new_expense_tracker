@@ -47,7 +47,9 @@ class _ExpensesState extends State<Expenses> {
         title: Text('Expense Tracker'),
         actions: [
           IconButton(
-              onPressed: _openAddExpenseOverlay, icon: const Icon(Icons.add)),
+              onPressed: _openAddExpenseOverlay, 
+              icon: const Icon(Icons.add)
+            ),
         ],
       ),
       body: Column(
