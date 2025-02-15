@@ -4,7 +4,6 @@ import 'package:new_expense_tracker/widget/expense_list/expenses_list.dart';
 import 'package:new_expense_tracker/models/expense.dart';
 import 'package:new_expense_tracker/widget/new_expense.dart';
 
-
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
 
@@ -16,28 +15,29 @@ class Expenses extends StatefulWidget {
 
 class _ExpensesState extends State<Expenses> {
   final List<Expense> _registeredExpenses = [
-    Expense(
-      title: 'Flutter course',
-      amount: 19.99,
-      date: DateTime.now(),
-      category: Category.work,
-    ),
-    Expense(
-      title: 'Cinema',
-      amount: 16.69,
-      date: DateTime.now(),
-      category: Category.leisure,
-    ),
-    Expense(
-      title: 'fire nation',
-      amount: 29.99,
-      date: DateTime.now(),
-      category: Category.food,
-    ),
+    // Expense(
+    //   title: 'Flutter course',
+    //   amount: 19.99,
+    //   date: DateTime.now(),
+    //   category: Category.work,
+    // ),
+    // Expense(
+    //   title: 'Cinema',
+    //   amount: 16.69,
+    //   date: DateTime.now(),
+    //   category: Category.leisure,
+    // ),
+    // Expense(
+    //   title: 'fire nation',
+    //   amount: 29.99,
+    //   date: DateTime.now(),
+    //   category: Category.food,
+    // ),
   ];
 
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
+      useSafeArea: true,
       isScrollControlled: true,
       context: context,
       builder: (ctx) => NewExpense(onAddExpense: _addExpense),
@@ -71,6 +71,8 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     Widget mainContent = Center(
       child: Text("no Expenses found . Start adding some!"),
     );
@@ -90,12 +92,15 @@ class _ExpensesState extends State<Expenses> {
               onPressed: _openAddExpenseOverlay, icon: const Icon(Icons.add)),
         ],
       ),
-      body: Column(
+      body: width < 600 ? Column(
         children: [
-          Chart(expenses: _registeredExpenses) ,
+          Chart(expenses: _registeredExpenses),
           Expanded(child: mainContent),
         ],
-      ),
+      ) : Row(children: [
+          Expanded(child: Chart(expenses: _registeredExpenses)),
+          Expanded(child: mainContent),
+      ],),
     );
   }
 }
